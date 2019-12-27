@@ -1,0 +1,26 @@
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        def combRec(nums,start,target,sofar):
+            
+            if target == 0:
+                #print("sofar:{}".format(sofar))
+                # sorting and converting to tuple before adding to set, in order to avoid duplicates
+                result.add(tuple(sorted(sofar)))
+                return
+            
+            if target<0:
+                return
+            
+            if start>len(nums)-1:
+                return
+            
+            combRec(nums,start+1,target,sofar)
+            combRec(nums,start+1,target-nums[start],sofar+[nums[start]])
+            
+            
+            
+        result = set()
+        combRec(candidates,0,target,[])
+        #print("result:{}".format(result))
+        
+        return [list(tup) for tup in result]
