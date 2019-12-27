@@ -1,0 +1,29 @@
+class Solution:
+    def maxSubArrayLen(self, nums: List[int], k: int) -> int:
+        
+        '''
+        # maintain hashmap with sum->index
+        # sum:index
+        # initialize with sum = 0 index -1 (to handle index substraction)
+        # example: nums = [1, -1, 5, -2, 3], k = 3
+        1 -1 also results in 0 but we want to keep hmap[0]=-1 untouched
+        ALGORITHM:
+        SIMILAR TO 2 SUM PROBLEM BUT WITH SUBARRAYS
+        KEEP SUM SO FAR AT EACH INDEX IN A HASHMAP WITH SUM AS KEY AND INDEX AS VALUE
+        IF WE FIND SUM-K OR K-SUM IN KEY THEN WE KNOW THAT FROM THIS INDEX TO THE PREVIOUS INDEX OF HMAP[SUM-K] IS THE SUBARRAY THAT HAS THE SUM K.
+        '''
+        hmap = dict()
+        hmap[0] = -1
+        
+        tsum = 0
+        maxlen = 0
+        for i,num in enumerate(nums):
+            tsum += num
+            #print("i:{} tsum:{}".format(i,tsum))
+            if tsum-k in hmap:
+                #print("hmap:{}".format(hmap))
+                maxlen = max(maxlen, (i-hmap[tsum-k]))
+            if tsum not in hmap:
+                hmap[tsum] = i
+        
+        return maxlen
